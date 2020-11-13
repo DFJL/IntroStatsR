@@ -1,0 +1,13 @@
+name: Clase2
+title: Clase2
+username:
+account: dfjl1986
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2236772
+bundleId: 3099553
+url: https://dfjl1986.shinyapps.io/Clase2/
+when: 1588568031.41654
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: Clase2Tutorial.html|covidCantones.csv|covidCantones.RData|www/covidCantones.csv

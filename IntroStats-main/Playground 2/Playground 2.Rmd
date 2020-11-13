@@ -1,0 +1,76 @@
+---
+title: "Playground"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+![](images/logo.png)
+
+```{r setup, include=FALSE}
+
+library(learnr)
+library(lubridate)
+library(dlookr)
+library(dplyr)
+knitr::opts_chunk$set(echo = TRUE,warning = FALSE, message = FALSE,fig.width =10 , fig.height = 8)
+
+ventas <- data.frame(temperatura=c(14.2,16.4,11.9,15.2,18.5,22.1,19.4,25.1,23.4,18.1,22.6,17.2),
+                     ventas=c(215,325,185,332,406,522,412,614,544,421,445,408)
+                     )
+
+
+covidCantones <- read.csv("https://raw.githubusercontent.com/DFJL/Datasets/master/covidCantones.csv",sep= ";")
+
+mobilityCR <- read.csv("https://raw.githubusercontent.com/DFJL/Datasets/master/mobilityCR.csv",sep= ";") 
+
+claims <- read.csv("https://raw.githubusercontent.com/DFJL/Datasets/master/unemploymentClaims.csv", sep= ";")
+
+claims$date <- as.Date(claims$Filed.week.ended, format = '%m/%d/%Y')
+
+# Creamos nuevas variables sobre el dataframe
+claims <- claims %>%
+  mutate(ClaimsRate = round(Continued.Claims/Covered.Employment*100,2),
+         month = as.factor(month(date,label = TRUE)),
+         year = as.factor(year(date)),
+         UnemploymentRate = factor(ifelse(State %in% c('Michigan','Nevada'),
+                                          "High","Low"
+                                          )
+                                   )
+         )
+
+# Se genera un dataframe versión light para varios análisis
+
+claimsTidy <- claims %>%
+  filter( State %in% c('Connecticut','Minnesota','Florida','Nevada','Michigan') & year(date)==2020) 
+
+titanic <- read.csv("https://raw.githubusercontent.com/DFJL/Datasets/master/titanic.csv",sep= ",")
+
+```
+
+
+
+## Información
+
+Este playground puede ejecutar código de R de una manera conveniente.
+
+Tiene los siguientes datasets precargados, para que solamente se ejecute código:
+
+- `titanic`
+- `ventas`
+- `covidCantones`
+- `mobilityCR`
+- `claims`
+- `claimsTidy`
+
+Paquetes:
+
+- `learnr`
+- `lubridate`
+- `dlookr`
+- `dplyr`
+
+```{r T1, exercise=TRUE}
+
+#Aqui su código
+
+```

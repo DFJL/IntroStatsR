@@ -1,0 +1,39 @@
+---
+title: "Reporte de Clase Número 2"
+author: "Felipe Jiménez"
+date: '`r format(Sys.time(), "%d %B, %Y")`'
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Instrucciones
+
+- Genere un documento R markdown para resolver los ejercicios.
+- En su documento R markdown, incluya como texto el enunciado del ejercicio y en el chunk incluya el código y los resultados.
+
+- Suba a classroom únicamente el documento renderizado con los las funciones requeridas y resultados (impresos en el reporte) para resolver los ejercicios y con el nombre de cada uno de los integrantes del grupo.
+
+# Ejercicios
+
+1- Cargue el archivo `covidCantones.csv` proveido por el profesor.Pongale el nombre que usted desee.
+
+2- Guarde un nuevo dataframe filtrando solamente por una provincia(utilice dplyr para fitrar).
+
+Para  las variables cases y deaths realice lo siguiente:
+
+3- Cálcule la cantidad total de casos por cantón.
+
+4- Cálcule la cantidad total de recuperados por cantón.
+
+5- Cálcule la cantidad de fallecidos por cantón.
+
+5- Obtenga el % de recuperados por cantón.
+
+6- Ordene de mayor a menor, según el % de recuperados.Analice esta variable.
+
+7- En dos nuevos dataframes, filtre los 3 cantones con mejor porcentaje de recuperación y los 3 cantones con porcentaje de recuperación mas bajo. (Pista: utilice la función `head()` de la clase 1 y su contraparte `tail()`)

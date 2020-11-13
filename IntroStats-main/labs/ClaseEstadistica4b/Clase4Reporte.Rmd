@@ -1,0 +1,114 @@
+---
+title: "Laboratorio Clase Número 4"
+author: "Felipe Jiménez"
+date: '`r format(Sys.time(), "%d %B, %Y")`'
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Instrucciones
+
+- Genere un documento R markdown para resolver los ejercicios.
+- En su documento R markdown, incluya como texto el enunciado del ejercicio y en el chunk incluya el código y los resultados.
+
+- Suba a classroom únicamente el documento renderizado con los las funciones requeridas y resultados (impresos en el reporte) para resolver los ejercicios.
+
+# Ejercicios
+
+1- Cargue el archivo `unemploymentClaims.csv` proveido por el profesor en el siguiente link(Debe hacerlo directamente desde la función `read.csv`:
+
+  https://raw.githubusercontent.com/DFJL/Datasets/master/unemploymentClaims.csv
+
+2- Copie y pegue el siguiente código para resumir el dataframe:
+
+
+```{r load,include=FALSE}
+
+library(dplyr)
+library(lubridate)
+
+#Previanmente he cargado el archivo con el nombre de claims
+
+claims <- read.csv("https://raw.githubusercontent.com/DFJL/Datasets/master/unemploymentClaims.csv",sep=";")
+
+
+```
+
+
+```{r data}
+
+library(dplyr)
+library(lubridate)
+
+#Previanmente he cargado el archivo con el nombre de claims
+
+claims$date <- as.Date(claims$Filed.week.ended, format = '%m/%d/%Y')
+
+claims2 <- claims %>%
+  mutate(year= year(date),
+         month= month(date)) %>%
+  filter(year==2020) %>%
+  group_by(State,year,month,date) %>%
+  summarise(claims= sum(Continued.Claims),
+            TotalEmployment=sum(Covered.Employment)) %>%
+  ungroup()
+  
+```
+
+
+```{r,include=FALSE}
+
+library(dlookr)
+library(dplyr)
+library(scales)
+
+claims3 <- filter(claims2,State=="New York")
+
+boxplot<- boxplot(claims~month,
+                     data=claims3,
+                     main="",
+                     xlab="Mes",
+                     ylab="Claims",
+                     col="orange",
+                     border="brown"
+                     )
+
+print(boxplot)
+
+
+outliers <-diagnose_outlier(claims3) %>%
+  mutate(outliers_ratio= percent(outliers_ratio/100,accuracy = 2),
+         with_mean = format(with_mean, scientific=F,digits = 2),
+         without_mean = format(with_mean, scientific=F,digits = 2)
+  )
+
+outliers
+
+plot_outlier(claims3,claims)
+
+describe(claims3)
+
+```
+
+3- Escoja un estado y filtre los datos en un nuevo dataframe.Utilice este dataframe para posteriores ejercicios.
+
+4- Cree un boxplot por la variable month para la variable claims.
+
+5- Realice un diagnostico de outliers.
+
+6- Corrija la columna `with_mean` y `without_mean` en caso de ser necesario, para que el resultado se muestre en notación numérica( Investigue la función `format`)
+
+7- Grafique el diagnóstico de outliers para la variable claims.
+
+8- Analice los resultados.
+
+9- Realice un análisis de la curtosis de la distribución, según la clasificación dada en clase.
+
+10- Realice un análisis de la asimetría de la distribución, según la clasificación dada en clase.
+
+

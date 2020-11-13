@@ -1,0 +1,13 @@
+name: claseEstadistica2
+title: claseEstadistica2
+username:
+account: dfjl1986
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2236833
+bundleId: 3104388
+url: https://dfjl1986.shinyapps.io/claseEstadistica2/
+when: 1588650302.66582
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: claseEstadistica2.html|data/covidCantones.RData|www/covidCantones.csv

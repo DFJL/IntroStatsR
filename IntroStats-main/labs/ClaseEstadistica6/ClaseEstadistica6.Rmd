@@ -1,0 +1,346 @@
+---
+title: "Clase Estadística 6: Introducción a la visualización de datos"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+
+library(knitr)
+knit_hooks$set(optipng = hook_optipng)
+knit_hooks$set(pngquant = hook_pngquant)
+
+library(ggplot2)
+library(gapminder)
+library(scales)
+library(learnr)
+library(lubridate)
+library(plotly)
+library(dplyr)
+knitr::opts_chunk$set(echo = TRUE,warning = FALSE, message = FALSE,fig.width =8 , fig.height = 7,dpi=100)
+
+ventas <- data.frame(temperatura=c(14.2,16.4,11.9,15.2,18.5,22.1,19.4,25.1,23.4,18.1,22.6,17.2),
+                     ventas=c(215,325,185,332,406,522,412,614,544,421,445,408)
+                     )
+
+
+covidCantones <- read.csv("https://raw.githubusercontent.com/DFJL/Datasets/master/covidCantones.csv",sep= ";")
+
+mobilityCR <- read.csv("https://raw.githubusercontent.com/DFJL/Datasets/master/mobilityCR.csv",sep= ";") 
+
+claims <- read.csv("https://raw.githubusercontent.com/DFJL/Datasets/master/unemploymentClaims.csv", sep= ";")
+
+claims$date <- as.Date(claims$Filed.week.ended, format = '%m/%d/%Y')
+
+# Creamos nuevas variables sobre el dataframe
+claims <- claims %>%
+  mutate(ClaimsRate = round(Continued.Claims/Covered.Employment*100,2),
+         month = as.factor(month(date,label = TRUE)),
+         year = as.factor(year(date)),
+         UnemploymentRate = factor(ifelse(State %in% c('Michigan','Nevada'),
+                                          "High","Low"
+                                          )
+                                   )
+         )
+
+# Se genera un dataframe versión light para varios análisis
+
+claimsTidy <- claims %>%
+  filter( State %in% c('Connecticut','Minnesota','Florida','Nevada','Michigan') & year(date)==2020) 
+
+titanic <- read.csv("https://raw.githubusercontent.com/DFJL/Datasets/master/titanic.csv",sep= ",")
+
+```
+
+
+![](images/logo.png)
+
+## Importancia visualización de datos
+
+Debido a la limitación cognitiva de graficar en dispositivos de dos dimensiones, construir visualizaciones con más de dos dimensiones (variables) es un desafio que se encuentra entre la ciencia y el arte.
+
+Como vimos en las etapas de todo análisis de datos, frecuentemente las visualizaciones de datos y lo conocido como el **data story telling** es una etapa crucial para porder "vender" los resultados a la audiencia interesada y que estos sean comprendidos de una manera óptima.
+
+Tomemos como ejemplo los datasets [Una docena de datasaurios](https://www.autodeskresearch.com/publications/samestats)
+
+Pueden a simple vista descubrir la semejanza entre dichos datasets?
+
+![Una docena de datasaurios: Que tienen en común??](https://miro.medium.com/max/1200/1*W--cGoA3_n2ZlU6Xs4o2iQ.gif)
+
+Estos datasets, aunque parezca imposible son exactamente iguales desde el punto de vista estadístico:
+
+![Estadísticas del datasaurio](https://miro.medium.com/max/566/1*WGOjHSOJAuVfGfySmHzJSA.png)
+
+
+La conclusión clave de este ejemplo es: "No confíe en sus datos a ciegas y comience a modelar sus datos". Las estadísticas de resumen podrían ser engañosas. Visualice y comprenda siempre sus atributos de datos antes de pasar a la preparación de datos y diseño de modelos estadísticos.
+
+## Data Storytelling
+
+La importancia del Data Storytelling es tan sencilla de comprender como que logra atraer la atención y empatía de la audiencia mediante historias, que están basadas en datos y hechos, uniendo así dos poderosas herramientas:
+
+![Hans Rosling Data Storytelling](https://www.youtube.com/watch?v=jbkSRLYSojo)
+
+
+## Introducción a la gramática de los gráficos
+
+Por los anteriores motivos, se han creado diversas estrategias, frameworks y metodologías para dichos objetivos.Una de las mas revolucionarias es la gramática de los gráficos.
+
+La gramática de los gráficos es un libro que sento un precedente acerca de los lineamientos y mecanismos para la creación de visualizaciones efectivas.
+
+![Portada del libro](https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQuQP2ooGXaB1zuR5vYZdf8GVFjIzIEu4WbWF2k5REEt91Bee-d&usqp=CAU)
+
+Pero que se entiende por gramática de los gráficos? Para entender el concepto debemos decomponer las palabras que lo componen:
+
+**Gramática**: Gramática es definida como un conjunto de reglas que ayudan a definir los componentes de un lenguaje.
+
+**Gramática de los gráficos** es el conjunto de reglas que nos permite establecer y describir los componentes de un gráfico.En lugar de intentos erráticos de fallo, se sigue un enfoque de capas para construir la visualización de una manera estructurada. 
+
+Estos componentes, han sido definidos como se muestra en la siguiente imagen:
+
+
+```{r, out.width = "80%",echo=FALSE}
+include_graphics("https://miro.medium.com/max/2616/1*w1RnmuE7VRK9aCAbtW9KAQ.gif")
+```
+
+
+El siguiente diagrama muestra una variación de los componentes en forma de pirámide, para mostrar la construcción jerárquica de los gráficos mediante este framework:
+
+```{r, out.width = "80%",echo=FALSE}
+include_graphics("https://miro.medium.com/max/2000/1*mcLnnVdHNg-ikDbHJfHDNA.png")
+```
+
+- **Data**: Siempre se empieza por las variables que se desean visualizar en el dataset.
+- **Aesthetics**: Ejes de las variables a graficar.Además si se desea codificar alguna otra dimensión como el tamaño, la forma, color y transparencia de los puntos de datos. 
+- **Scale**: Se necesita alguna escala específica para los datos, como la logarítmica por ejemplo?
+- **Geometric objects**: Popularmente conocidos como `geoms`.Esto traducirá como visalizaremos los puntos de datos en el gráfico(líneas, puntos, barras, etc).
+- **Statistics**: Se requeiren medidas estadísticas como medidas de tendencia central o de variabilidad?
+- **Facets**: Necesitamos crear subsets de gráficos sobre las dimensiones ya establecidas?
+- **Coordinate system**: Cuál sistema de coordenadas se debe utilizar? cartesiano, polar?
+
+## Implementación de la gramática de los gráficos en R: ggplot2
+
+En R se creó la primera y más fiel implementación de la [gramática de los gráficos](http://vita.had.co.nz/papers/layered-grammar.html) por medio del afamado paquete `ggplot2`.Si bien es cierto no es una implementación 100% fiel pero sigue los mismos conceptos.
+
+La propuesta de ggplot2, con sus variantes implementa muchos componentes en forma de capas para descomponer o describir cualquier gráfico, como se muestra en la siguiente imagen
+
+![](https://image.slidesharecdn.com/180706gog-180806070057/95/grammar-of-graphics-darya-vanichkina-23-638.jpg?cb=1533539215)
+
+## Mapeo de capas con ggplot(1/3)
+
+Analizemos como se mapean las capas por medio de la interfaz de ggplot.Tenemos por ejemplo el siguiente gráfico:
+
+![](https://h1rpba.bn.files.1drv.com/y4mpOrWV3AQ26P3xd2llN3n95jWRvtb2O8z4hIuCoeM4sLmyroea3_LYN3gLXF9r40zTqjtPU90Fr-LL6DeqcwtO-zHb21Xnc3oCrXO7vyM4VmXdiZf52tD0EmiZpb5FQVnkTgUrxh-wVEPsBASCbLOBxS0IHUtc7FlnT2KWdfWIL00zHi9j-OauN2VTiUwp3Bk1whHO6V287evojSU1oa25g?width=777&height=545&cropmode=none)
+
+## Mapeo de capas con ggplot(2/3)
+
+En ggplot2, se mapean los elementos de los gráficos de la siguiente manera:
+
+![](https://tvzyha.bn.files.1drv.com/y4moNT9HB__rKVl9ELewmmaPb_xyPhlhHl2m8mnu59PIzOX5_B5qBuhyledgMjwGSqPCGaemhrxMY2gf_0ENtyBp8xfFAuVE9A4p_F7OxZlq7ZMmNR_n9HG1JTS6N1zkxJo9LYQDsoEsYUT3R96OVTYkzvtlpLP0cAyGlNSXM5f8rP0-pjvlM5M8pl_e0825PsNfBT3IS9uwBhcQEZQlBEkcg?width=660&height=357&cropmode=none)
+
+## Mapeo de capas con ggplot(3/3)
+
+Finalmente, observamos para este ejemplo, como se mapean los elementos del gráfico con las capas de ggplot:
+
+![](https://uxgajw.bn.files.1drv.com/y4mYaNKcGA-jYiRxOVR9awQiToSYTJ0Lcl70mXskhHfmFEtshXf3i7ouyThlOpFPVaJXOA_xLdxF_MMq8uOPp5lKloKvskYzzCAA9DFrOR2FwuyJfDJzcMUDw2BqSp1AKFdaEwnKLOUBEn9P4TLglWaQ9EwMz_jovlGcMPtMAIvU7BS4jmaVbInBHcIpJkBqhQgdqMwFCbQJOMsXraPgDQUSA?width=660&height=256&cropmode=none)
+
+## Data/ Aesthetics /geom
+
+Para comenzar , vamos a cargar el dataset `gapminder` del paquete `gapminder`  y cargar el paquete `ggplot2`
+
+
+```{r 0, exercise=TRUE}
+
+titanic <- read.csv("https://raw.githubusercontent.com/DFJL/Datasets/master/titanic.csv",sep= ",")
+
+library(dplyr)
+library(gapminder)
+library(ggplot2)
+
+glimpse(gapminder)
+
+
+```
+
+Vamos a crear un "esqueleto básico de plot con la función `ggplot` y mapear las aesteticas:
+
+```{r 1, exercise=TRUE}
+
+plot1 <- ggplot(data = gapminder, aes(x= lifeExp,y=gdpPercap))
+
+plot1
+
+
+```
+
+Como vemos, solamente se grafica los ejes con las variables incluídas en el código.Para agregar los datos, se debe agregar otra capa, en esta caso con la función `geom`.Existen diferentes versiones de esta familia de funciones, según la forma que se requiera implementar.En este caso se usará `geom_point` para graficar puntos y crear un scatterplot:
+
+```{r 2, exercise=TRUE}
+
+plot1 <- ggplot(data = gapminder, aes(x= lifeExp,y=gdpPercap))+
+  geom_point()
+
+plot1
+
+
+```
+
+También podemos incluir otros tipos de aesteticas, como `fill` ,  `size` o `colour`:
+
+```{r 3, exercise=TRUE}
+
+plot1 <- ggplot(data = gapminder, aes(x= lifeExp,y=gdpPercap))+
+  geom_point(aes(size=pop,colour=continent))
+
+plot1
+
+
+```
+
+También podemos explorar otras geoms y stats, por ejemplo el gráfico de densidad o histograma:
+
+```{r 4, exercise=TRUE}
+
+#Solo el histograma
+ggplot(data=gapminder, aes(x=lifeExp)) + 
+    geom_histogram( binwidth=4, color="black", fill="pink", alpha=0.8)
+
+# solo la densidad
+ggplot(data=gapminder, aes(x=lifeExp)) + 
+    stat_density(size=1.3, fill="lightblue", alpha=0.5) 
+
+# Ambos
+ggplot(data=gapminder, aes(x=lifeExp)) + 
+    geom_histogram(aes(y=..density..),binwidth=4, color="black", fill="pink", alpha=0.8)+
+    stat_density(size=1.3, fill="lightblue", alpha=0.7) 
+
+
+```
+
+Otra opción , es comparar las densidades por continente:
+
+```{r 5, exercise=TRUE}
+
+ggplot(data=gapminder, aes(x=lifeExp, fill=continent)) +
+    geom_density(alpha=0.3)
+```
+
+## Scales / Facets
+
+Vamos a agregar más capas al gráfico scatterplot que creamos originalmente:
+
+```{r 6, exercise=TRUE}
+
+plot1 <- ggplot(data = gapminder, aes(x= lifeExp,y=gdpPercap))+
+  scale_y_log10() + # para mejorar la escala de la variable x
+  scale_size_area(max_size = 10) + # para mejorar el tamaño de los puntos de datos
+  geom_point(aes(size=pop,colour=continent)) +
+  stat_smooth(method="loess") + # para crear una línea suavizada del patrón de los datos
+  facet_grid(cols = vars(continent)) # Para hacer subsets
+
+plot1
+
+
+```
+
+**Mezclando con dplyr**
+
+Una vez más, podemos combinar con alguna operación de dplyr, para preprocesar los datos y luego generar la visualización:
+
+
+```{r 7, exercise=TRUE}
+
+gapminder %>%
+  filter(year==1997 & continent=="Americas") %>%
+  ggplot(aes(x= lifeExp,y=gdpPercap))+
+  scale_y_log10() + 
+  scale_size_area(max_size = 10)+
+  geom_point(aes(size=pop,colour=country))+
+  geom_text(aes(label=country)) +
+  stat_smooth(method="loess") 
+
+```
+
+```{r 8, exercise=TRUE}
+
+gapminder %>%
+  mutate(crInd=ifelse(country=="Costa Rica",1,0)) %>%
+  ggplot(aes(x=year, y=gdpPercap, group=country,colour=factor(crInd),alpha=factor(crInd))) +
+  scale_y_log10(labels = scales::comma) +
+  geom_line()
+
+```
+
+**Su turno**
+
+Cree un gráfico de serie de tiempo que muestre la trayectoria por país de la esperanza de vida y realice el "highlight" de Costa Rica
+
+```{r T1, exercise=TRUE}
+
+#Aqui su código
+
+```
+
+
+## Themes
+
+Una capa que no incluye datos, pero es importante para la apariencia del gráfico es `theme`.Con ella se puede cambiar los temas de los gráficos, títulos, tamaños de etiquetas, posiciones de legendas,etc.
+
+```{r 9, exercise=TRUE}
+
+gapminder %>%
+  filter(year==1997 & continent=="Americas") %>%
+  ggplot(aes(x= lifeExp,y=gdpPercap))+
+  #scale_y_log10() + 
+  scale_size_area(max_size = 10)+
+  geom_point(aes(size=pop,colour=country))+
+  geom_text(aes(label=country)) +
+  stat_smooth(method="loess") +
+  theme_minimal(base_size = 10) +
+  theme(legend.position="None") +
+  labs(title = "Esperanza de vida y PIB per Cápita para países de America",
+       subtitle = "(1997)",
+       caption = "Datos del paquete gapminder",
+       tag = "Figura 1",
+       x = "Esperanza de vida",
+       y = "PIB Per Cápita",
+       colour = "País",
+       size="Población")
+
+```
+
+## Animación
+
+Finalmente, con la ayuda del paquete plotly, que permite trasladar objetos ggplot a objetos interactivos, podemos crear animaciones, en este caso basadas en el año:
+
+```{r 10, exercise=TRUE}
+
+library(plotly)
+
+gapminderF <- gapminder %>%
+  filter(continent=="Americas")
+
+
+gg <- ggplot(gapminderF,aes(x= lifeExp,y=gdpPercap,frame = year))+
+  #scale_y_log10() + 
+  scale_size_area(max_size = 10)+
+  geom_point(aes(size=pop,colour=country,ids = country))+
+  geom_text(aes(label=country,ids = country)) +
+  stat_smooth(method="loess") +
+  theme_minimal(base_size = 10) +
+  theme(legend.position="None") +
+  labs(title = "Esperanza de vida y PIB per Cápita para países de America",
+       subtitle = "(1997)",
+       caption = "Datos del paquete gapminder",
+       tag = "Figura 1",
+       x = "Esperanza de vida",
+       y = "PIB Per Cápita",
+       colour = "País",
+       size="Población")
+
+  ggplotly(gg, dynamicTicks = TRUE)
+  layout(hovermode = "x")
+
+
+```
+
+

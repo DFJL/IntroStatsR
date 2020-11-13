@@ -1,0 +1,37 @@
+---
+title: \vspace{3.5in}"Titulo del Proyecto"
+author: "Nombre del autor"
+date: '`r format(Sys.time(), "%d %B, %Y")`'
+output: 
+  html_document:
+    toc: true # table of content true
+    toc_float: true
+    toc_depth: 4  # upto three depths of headings (specified by #, ## and ###)
+    number_sections: true  ## if you want number sections at each table header
+    theme: united  # many options for theme, this one is my favorite.
+    highlight: tango  # specifies the syntax highlighting style
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE,warning = FALSE, message = FALSE,fig.width =10 , fig.height = 8)
+
+```
+
+
+# Sección 1
+
+```{r chunk1}
+
+str(Titanic)
+
+```
+
+
+## Subsección 1.2
+
+**texto en negrita**
+
+### Subsección 1.2.1
+
+## Sección 2

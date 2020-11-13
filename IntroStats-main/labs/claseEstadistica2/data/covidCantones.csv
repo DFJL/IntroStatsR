@@ -1,0 +1,60 @@
+Province;Canton;Cases;Recoveries;Deaths
+San Jose;San Jose;96;22;2
+San Jose;Alajuelita;14;3;0
+San Jose;Aserri;12;2;0
+San Jose;Coronado;9;3;0
+San Jose;Curridabat;22;7;0
+San Jose;Desamparados;45;10;1
+San Jose;Escazu;29;13;0
+San Jose;Goicoechea;21;5;0
+San Jose;Montes de Oca;16;4;0
+San Jose;Mora;7;0;0
+San Jose;Moravia;12;9;0
+San Jose;Perez Zeledon;3;3;0
+San Jose;Puriscal;1;1;0
+San Jose;Santa Ana;40;20;1
+San Jose;Tarrazu;4;1;0
+San Jose;Tibas;19;8;0
+San Jose;Turrubares;2;0;0
+Alajuela;Alajuela;77;48;2
+Alajuela;Atenas;4;0;0
+Alajuela;Grecia;16;3;0
+Alajuela;Naranjo;5;4;0
+Alajuela;Orotina;7;4;0
+Alajuela;Palmares;11;8;0
+Alajuela;Poas;6;3;0
+Alajuela;San Carlos;29;9;0
+Alajuela;San Ramon;11;1;0
+Alajuela;Sarchi;6;3;0
+Cartago;Cartago;13;3;0
+Cartago;Alvarado;1;0;0
+Cartago;El Guarco;5;3;0
+Cartago;Jimenez;2;2;0
+Cartago;La Union;21;5;0
+Cartago;Oreamuno;5;1;0
+Cartago;Paraiso;1;0;0
+Cartago;Turrialba;1;0;0
+Heredia;Heredia;17;7;0
+Heredia;Barva;8;1;0
+Heredia;Santo Domingo;6;1;0
+Heredia;Santa Barbara;3;3;0
+Heredia;San Rafael;10;6;0
+Heredia;San Isidro;1;1;0
+Heredia;Belen;4;2;0
+Heredia;Flores;1;1;0
+Heredia;San Pablo;13;8;0
+Guanacaste;Liberia;1;1;0
+Guanacaste;Carrillo;2;2;0
+Guanacaste;Hojancha;1;1;0
+Guanacaste;Nicoya;4;4;0
+Guanacaste;Santa Cruz;3;3;0
+Guanacaste;Tilaran;2;2;0
+Puntarenas;Puntarenas;5;4;0
+Puntarenas;Coto Brus;2;0;0
+Puntarenas;Esparza;2;0;0
+Puntarenas;Garabito;22;5;0
+Puntarenas;Montes de Oro;2;2;0
+Puntarenas;Osa;5;1;0
+Limon;Limon;2;1;0
+Limon;Pococi;5;0;0
+Limon;Siquirres;1;0;0

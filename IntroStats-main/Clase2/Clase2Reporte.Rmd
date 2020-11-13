@@ -1,0 +1,38 @@
+---
+title: "Reporte de Clase Número 2"
+author: "Felipe Jiménez"
+date: '`r format(Sys.time(), "%d %B, %Y")`'
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Instrucciones
+
+- Genere un documento R markdown para resolver los ejercicios.
+- En su documento R markdown, incluya como texto el enunciado del ejercicio y en el chunk incluya el código y los resultados.
+
+- Suba a classroom únicamente el documento renderizado con los las funciones requeridas y resultados (impresos en el reporte) para resolver los ejercicios y con el nombre de cada uno de los integrantes del grupo.
+
+# Ejercicios
+
+1- Cargue el archivo `covidworld.csv` proveido por el profesor.Pongale el nombre que usted desee.
+
+2- Guarde un nuevo dataframe filtrando solamente por un continente(utilice dplyr para fitrar).
+
+Para  las variables cases y deaths realice lo siguiente:
+
+3- Obtenga la desviación estándar de ambas variables.Interprete.
+
+4- Obtenga el coeficiente de variación de ambas variables.Cuál presenta una mayo variación relativa.
+
+5- Escoja una de las dos variables ( casos o muertes) y compare (utilizando el coeficiente de variación) con un grupo que haya escogido otro continente.Conteste lo siguiente:
+- Cuál continente presenta mayor variación?
+- Que significa lo anterior?
+
+**Nota** El ejercicio 5 es solamente para realizar en clase.
+

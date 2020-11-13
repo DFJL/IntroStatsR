@@ -1,0 +1,76 @@
+---
+title: "Reporte de Clase Número 3"
+author: "Felipe Jiménez"
+date: '`r format(Sys.time(), "%d %B, %Y")`'
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Instrucciones
+
+- Genere un documento R markdown para resolver los ejercicios.
+- En su documento R markdown, incluya como texto el enunciado del ejercicio y en el chunk incluya el código y los resultados.
+
+- Suba a classroom únicamente el documento renderizado con los las funciones requeridas y resultados (impresos en el reporte) para resolver los ejercicios.
+
+# Ejercicios
+
+1- Cargue el archivo `unemploymentClaims.csv` proveido por el profesor en el siguiente link(Debe hacerlo directamente desde la función `read.csv`:
+
+  https://raw.githubusercontent.com/DFJL/Datasets/master/unemploymentClaims.csv
+
+2- Copie y pegue el siguiente código para resumir el dataframe:
+
+
+```{r load,include=FALSE}
+
+library(dplyr)
+library(lubridate)
+
+#Previanmente he cargado el archivo con el nombre de claims
+
+claims <- read.csv("https://raw.githubusercontent.com/DFJL/Datasets/master/unemploymentClaims.csv",sep=";")
+
+
+```
+
+
+```{r data,eval=FALSE}
+
+library(dplyr)
+library(lubridate)
+
+#Previanmente he cargado el archivo con el nombre de claims
+
+claims$date <- as.Date(claims$Filed.week.ended, format = '%m/%d/%Y')
+
+claims2 <- claims %>%
+  filter(month(date)==4) %>%
+  mutate(year= year(date)) %>%
+  group_by(State,year) %>%
+  summarise(claims= sum(Continued.Claims)) %>%
+  ungroup()
+  
+```
+
+3- Indique mediante la utilización de una función, si alguna de las variables tiene valores nulos.
+
+4- Indique mediante la utilización de una función, si alguna de las variables tiene valores negativos.
+
+5- Obtenga un nuevo data frame con los datos solamente del 2020.
+
+Para los datos filtrados según el ejercicio anterior:
+
+6- Diagnostique la variable claims, mediante la función utilizada en clase.Analice los resultados
+
+7- Obtenga la distribución de frecuencias de la variable claims
+
+8- Obtenga el histograma de la variable claims.Analicelo los resultados.
+
+**Bonus** Explique que hace el código del chunk adjuntado en este documento.
+

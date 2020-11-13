@@ -1,0 +1,118 @@
+---
+title: "Soluciones en la nube para R y RStudio"
+author: "Felipe Jimenez"
+institute: "TEC,Costa Rica"
+date: " `r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+
+class: inverse, center, middle
+
+# Empecemos
+
+---
+
+# R Studio Cloud
+
+--
+- [RStudio Cloud](https://rstudio.cloud/) es la solución oficial de RStudio para trabajar desde la nube.Hasta hace unos meses tenía cuota de uso ilimitada, pero ahora cuenta con una opción gratuita de 15 horas de cómputo.
+
+--
+- [Acá](https://rpubs.com/Felipe1986/RstudioCloud) pueden obtener una guía básica para empezar con R Studio Cloud.
+
+---
+
+# Microsoft Azure Machine Learning Studio(1/3)
+
+--
+- [Azure ML Studio](https://ml.azure.com/) es una solución comercial para el desarrollo de iniciativas analíticas *end to end*.
+
+--
+
+--
+- Cuenta con una gran variedad de módulos y herramientas, que van desde la modalidad "siempre gratis", hasta "pague por lo que consume".
+
+--
+
+--
+- En esta plataforma se puede combinar tanto herramientas basadas en código (como R, python o SQL) como herramientas del tipo "*drag and drop*" para el diseño de flujos de trabajo analíticos.
+
+--
+
+--
+- Es una plataforma altamente recomendada para aprender, pero se debe tener precaución de los costos asociados y *no dejar los servidores o servicios encendidos a menos que se estén utilizando*
+
+--
+
+---
+
+# Microsoft Azure Machine Learning Studio(2/3)
+
+--
+- **Guía de configuración de cuenta en Azure ML Studio**.  
+
+--
+
+--
+- En el portal de [azure](https://portal.azure.com/#home) haga el registro de su cuenta
+
+--
+
+--
+- Seleccione "+ Create a Resource" y en el buscador ingrese "Machine Learning" y cree un nuevo recurso de Machine Learning con los siguientes configuraciones:
+
+- **Workspace Name**: Ingrese un nombre único.
+- **Subscription**: Su subscripción de Azure.
+- **Resource group**: Cree un nuevo grupo con nombre único.
+- **Location**: Escoja cualquiera que este disponible.
+
+--
+
+---
+
+# Microsoft Azure Machine Learning Studio(3/3)
+
+--
+- **Guía de configuración de cuenta en Azure ML Studio( continuación)**.  
+
+--
+
+--
+- Cree una instancia de Cómputo ( este paso es vital ya que esta es la máquina donde correra el software).
+
+- En  [Azure Machine Learning studio](https://ml.azure.com/) , busca la página de "Compute" (abajo de "Manage").
+- En el tab de " Compute instances " , cree una nueva instancia con la siguiente configuración:
+
+- **Compute name**: Ingrese un nombre único.
+- **Virtual Machine type**: CPU
+- **Virtual Machine size**: Standard_DS11_v2
+
+Espere a que se cree la instancia de computo y de click al botón de RStudio.
+
+- Puede ver el video en el siguiente slide
+
+--
+
+---
+
+```{r , include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+
+<iframe src="https://player.vimeo.com/video/475215585" width="640" height="564" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>"
+
+[link en vimeo](https://vimeo.com/475215585)
+---
+

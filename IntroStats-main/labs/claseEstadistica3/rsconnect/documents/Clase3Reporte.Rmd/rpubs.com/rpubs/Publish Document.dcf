@@ -1,0 +1,10 @@
+name: Publish Document
+title:
+username:
+account: rpubs
+server: rpubs.com
+hostUrl: rpubs.com
+appId: https://api.rpubs.com/api/v1/document/613327/c9329b1248674471bd04643faa83b892
+bundleId: https://api.rpubs.com/api/v1/document/613327/c9329b1248674471bd04643faa83b892
+url: http://rpubs.com/Felipe1986/613327
+when: 1589511946.35905
