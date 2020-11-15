@@ -326,7 +326,7 @@ binPretty2
 
 #Con el paquete dlookr podemos usar solamente la función plot sobre los bines y rápidamente tenemos el histograma
 
-plot(binPretty2, sub = "Costa Rica: Histograma de los fallecimientos de Covid-19 por cantón")
+plot(binPretty2, sub = "Flight airtime histogram distribution")
 
 ```
 
