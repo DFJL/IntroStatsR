@@ -7,7 +7,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "felipe_jimenez_l@yahoo.com",
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+Description: El paquete introStatsR contiene tutoriales y materiales para el curso del Técnico de Análisis de Datos del Instituto Tecnológico de Costa Rica.En dichos tutoriales, podrá comprender los temas estadísticos básicos en el ambiente de R, ya sea de manera sincrónica o asincrónica.
 License: `use_mit_license()`, `use_gpl3_license()` or friends to
     pick a license
 Encoding: UTF-8

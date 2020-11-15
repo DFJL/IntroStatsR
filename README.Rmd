@@ -21,3 +21,8 @@ A este momento, el paquete contiene 6 tutoriales con la siguiente temática:
 
 
 ## Instalación
+
+```{r,eval=FALSE}
+remotes::install_github("DFJL/IntroStatsR")
+```
+

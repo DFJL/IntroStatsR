@@ -249,7 +249,7 @@ Para crear distribuciones de frecuencia de variables cuantitativas, podemos util
 library(dlookr)
 library(dplyr)
 
-binEqual <- binning(covidCantones$Cases,type = "equal")
+binEqual <- binning(covidCantones$Deaths,type = "equal",nbins = 8)
 
 
 binEqual
@@ -263,25 +263,16 @@ binEqual
 library(dlookr)
 library(dplyr)
 
-binEqual <- binning(covidCantones$Cases,type = "equal")
+binEqual <- binning(covidCantones$Deaths,type = "equal")
 
 # Se puede jugar con las opciones de binning
-binPretty1 <- binning(covidCantones$Cases,
+binPretty1 <- binning(covidCantones$Deaths,
                      type = "pretty")
 
-binPretty2 <- binning(covidCantones$Cases,
-                     type = "pretty",
-                     nbins = 4,
-                     labels =c("Menos de 20 Casos", "20-40 Casos", "40-60 Casos", 
-                               "60-80 Casos","Mas de 80 Casos") 
-                     )
+#Observar los cortes
+binPretty1
 
-
-binPretty1;binPretty2
-
-# La función summary(bin) realiza una distribución de fecuencias de los bines
-
-summary(binPretty2)
+summary(binPretty1)
 
 
 ```
@@ -297,7 +288,7 @@ library(dplyr)
 
 
 provinciasDist <- covidCantones %>%
-  mutate(bin = binning(covidCantones$Cases,type = "pretty")) %>%
+  mutate(bin = binning(covidCantones$Deaths,type = "pretty")) %>%
   group_by(bin) %>%
   summarise(Freq = n()) %>%
   mutate(relFreq = prop.table(Freq),
@@ -314,9 +305,11 @@ provinciasDist
 
 Una manera conveniente y gráfica de analizar las distribuciones de frecuencia son los histogramas.Los histogramas son gráficos de barra especiales en los cuáles los intervalos de clase o bines se encuentra en el eje x y en el eje y se encuentra la frecuencia(ya sea absoluta o relativa) de la variable analizada.
 
-Veamoslo con un ejemplo de los datos de covid que venimos analizando, con el paquete `dlookr` :
+Veamoslo con un ejemplo de los datos de `flights$air_time`(buscar en la ayuda del paquete  el significado de esta variable) que venimos analizando, con el paquete `dlookr` :
 
 ```{r 10, exercise=TRUE}
+
+
 
 library(dlookr)
 library(dplyr)
@@ -324,11 +317,8 @@ library(dplyr)
 # Volvamos a calcular la distribución de frecuencias
 
 
-binPretty2 <- binning(covidCantones$Cases,
-                     type = "pretty",
-                     nbins = 4,
-                     labels =c("Menos de 20 Casos", "20-40 Casos", "40-60 Casos", 
-                               "60-80 Casos","Mas de 80 Casos") 
+binPretty2 <- binning(flights$air_time,
+                     type = "pretty"
                      )
 
 
@@ -336,7 +326,7 @@ binPretty2
 
 #Con el paquete dlookr podemos usar solamente la función plot sobre los bines y rápidamente tenemos el histograma
 
-plot(binPretty2, sub = "Costa Rica: Histograma de los casos de Covid-19 por cantón")
+plot(binPretty2, sub = "Costa Rica: Histograma de los fallecimientos de Covid-19 por cantón")
 
 ```
 
