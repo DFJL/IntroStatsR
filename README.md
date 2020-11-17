@@ -13,13 +13,13 @@ tutoriales disponibles.
 A este momento, el paquete contiene 5 tutoriales con la siguiente
 temática:
 
-| Totorial | Contenido                                              |
-| -------- | ------------------------------------------------------ |
-| Clase 2  | Medidas de variabilidad y tipos de variable            |
-| Clase 3  | Introducción al análisis exploratorio de datos         |
-| Clase 4  | Análisis de correlación                                |
-| Clase 5  | Análisis de regresión                                  |
-| Clase 6  | Introducción a la visualización de datos con `ggplot2` |
+| Totorial | Contenido                                               | Link ShinyApps                                             |
+| -------- | ------------------------------------------------------- | ---------------------------------------------------------- |
+| Clase 2  | Medidas de variabilidad y tipos de variable             | [Clase2](https://dfjl1986.shinyapps.io/claseEstadistica2/) |
+| Clase 3  | Introducción al análisis exploratorio de datos          | [Clase3](https://dfjl1986.shinyapps.io/claseEstadistica3/) |
+| Clase 4  | Introducción al análisis exploratorio de datos(Parte 2) | [Clase4](https://dfjl1986.shinyapps.io/claseEstadistica3/) |
+| Clase 5  | Análisis de correlación                                 | [Clase5](https://dfjl1986.shinyapps.io/claseEstadistica4/) |
+| Clase 6  | Introducción a la visualización de datos con `ggplot2`  | [Clase6](https://dfjl1986.shinyapps.io/claseEstadistica6/) |
 
 ## Instalación
 
@@ -57,6 +57,9 @@ learnr::available_tutorials("introStatsR")
 #> * introStatsR
 #>   - Clase2 : "Clase 2:Medidas de variabilidad y tipos de variables"
 #>   - Clase3 : "Clase 3 Estadística: Análisis Exploratorio de datos"
+#>   - Clase4 : "Clase 4 Estadística: Análisis Exploratorio de datos (Parte 2)"
+#>   - Clase5 : "Clase Estadística 5: Correlación"
+#>   - Clase6 : "Clase Estadística 6: Introducción a la visualización de datos"
 ```
 
   - Mediante la interfaz de usuario de Rstudio:
